@@ -21,6 +21,8 @@ ENV PATH="/usr/local/go/bin:${PATH}"
 ENV PATH="/root/go/bin:${PATH}"
 ENV CGO_LDFLAGS="-L/usr/local/lib"
 ENV CGO_ENABLED=1
+ENV GOCACHE=/root/.cache/go-build
+ENV GOMODCACHE=/go/pkg/mod
 
 RUN go install github.com/pact-foundation/pact-go/v2@latest
 
