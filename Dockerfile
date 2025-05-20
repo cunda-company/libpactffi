@@ -2,10 +2,6 @@ FROM ubuntu:latest
 
 RUN apt-get update && \
     apt-get install -y curl unzip && \
-    mkdir -p /usr/local/lib/pact_x86_64 && \
-    curl -LO https://github.com/pact-foundation/pact-reference/releases/download/libpact_ffi-v0.4.27/libpact_ffi-linux-x86_64.so.gz && \
-    gunzip libpact_ffi-linux-x86_64.so.gz && \
-    mv libpact_ffi-linux-x86_64.so /usr/local/lib/pact_x86_64/libpact_ffi.so && \
     # Install AWS CLI v2
     curl -Lo "awscliv2.zip" "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" && \
     unzip awscliv2.zip && \
@@ -21,4 +17,11 @@ RUN ARCH=$(dpkg --print-architecture) && \
     tar -C /usr/local -xzf go${GO_VERSION}.linux-${GOARCH}.tar.gz && \
     rm go${GO_VERSION}.linux-${GOARCH}.tar.gz
 
-ENV PATH="/usr/local/go/bin:${PATH}" 
+ENV PATH="/usr/local/go/bin:${PATH}"
+
+RUN go get github.com/pact-foundation/pact-go/v2 && \
+    go install github.com/pact-foundation/pact-go/v2
+
+RUN pact-go -l DEBUG install
+
+RUN pact-go check
