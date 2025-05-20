@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
 RUN apt-get update && \
-    apt-get install -y curl unzip && \
+    apt-get install -y curl unzip gcc && \
     # Install AWS CLI v2
     curl -Lo "awscliv2.zip" "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" && \
     unzip awscliv2.zip && \
@@ -19,6 +19,8 @@ RUN ARCH=$(dpkg --print-architecture) && \
 
 ENV PATH="/usr/local/go/bin:${PATH}"
 ENV PATH="/root/go/bin:${PATH}"
+ENV CGO_LDFLAGS="-L/usr/local/lib"
+ENV CGO_ENABLED=1
 
 RUN go install github.com/pact-foundation/pact-go/v2@latest
 
