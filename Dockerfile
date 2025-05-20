@@ -19,7 +19,7 @@ RUN ARCH=$(dpkg --print-architecture) && \
 
 ENV PATH="/usr/local/go/bin:${PATH}"
 
-RUN go install github.com/pact-foundation/pact-go/v2
+RUN go install github.com/pact-foundation/pact-go/v2@latest
 
 RUN pact-go -l DEBUG install
 
