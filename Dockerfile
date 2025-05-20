@@ -18,6 +18,7 @@ RUN ARCH=$(dpkg --print-architecture) && \
     rm go${GO_VERSION}.linux-${GOARCH}.tar.gz
 
 ENV PATH="/usr/local/go/bin:${PATH}"
+ENV PATH="/root/go/bin:${PATH}"
 
 RUN go install github.com/pact-foundation/pact-go/v2@latest
 
